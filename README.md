@@ -1,5 +1,5 @@
 # Pac-Gal for MS-DOS
-An analysis of the May 1982 game for IBM-PC by Al. J Jiménez.  It's a simple ASCII game, and I really enjoyed playing it "back in the day".  It's the gameplay, never the graphics.<br>
+An analysis of the May 1982 game for IBM PC by Al J. Jiménez.  It's a simple ASCII game, and I really enjoyed playing it "back in the day".  It's the gameplay, never the graphics.<br>
 
 ![PAC-GAL](/PAC-GAL_1.png)
 
