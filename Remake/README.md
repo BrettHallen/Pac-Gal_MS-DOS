@@ -1,14 +1,32 @@
-# PAC-GAL (1982) remake in C with SDL3
+# PAC-GAL (1982) remake in C
 
 ![PAC-GAL running in a window](screenshot.png)
 
-A faithful, windowed remake of **PAC-GAL** by Al J. Jiménez (May 1982), the IBM PC text-mode Pac-Man clone. It's written in portable C99 with SDL3 and builds on macOS, Linux and Windows.
+A faithful remake of **PAC-GAL** by Al J. Jiménez (May 1982), the IBM PC text-mode Pac-Man clone, written in portable C99. There are two versions, which share the same game code:
+
+- **`PAC-GAL`** runs in a window using SDL3, with a CGA-style font, colours and PC-speaker sound.
+- **`pacgal-text`** runs in a terminal in text mode, like the original. It needs nothing but a C compiler and builds on macOS, Linux, BSD and Windows 10+.
 
 The game logic is a line-by-line port of the original program, reconstructed by disassembling `Original/Pac-gal.exe` (see `../Analysis/`). It was checked against the real EXE running in an emulator. With `--original` rules and the same inputs and random numbers, the port's game state **and every character and colour on the 80×25 screen** match the original on every step. Four scripted runs of 1,500 steps each were compared, including dozens of deaths and several ghosts being eaten.
 
 ## Building
 
-You need CMake 3.16+ and a C compiler. SDL3 is used if it's already installed; if it isn't, CMake downloads and builds it for you, which needs Git and an internet connection the first time.
+### Terminal version only, with any C compiler
+
+No CMake or libraries needed. This version is silent:
+
+```sh
+cc -O2 -Isrc -o pacgal-text src/term_main.c src/game.c src/screen.c src/sound.c -lm
+./pacgal-text
+```
+
+On Windows with Visual Studio, use `cl /O2 /Isrc /Fe:pacgal-text.exe src\term_main.c src\game.c src\screen.c src\sound.c` from a Developer Command Prompt.
+
+### Both versions, with CMake
+
+You need CMake 3.16+ and a C compiler. SDL3 is used if it's already installed; if it isn't, CMake downloads and builds it for you, which needs Git and an internet connection the first time. The build makes `PAC-GAL` (the window version) and `pacgal-text`. When SDL3 is available, `pacgal-text` also gets sound through it.
+
+To build only the terminal version, with no SDL at all, add `-DPACGAL_GUI=OFF -DPACGAL_TEXT_AUDIO=OFF` to the first `cmake` command below.
 
 ### macOS
 
@@ -16,7 +34,8 @@ You need CMake 3.16+ and a C compiler. SDL3 is used if it's already installed; i
 brew install cmake sdl3           # sdl3 is optional, see above
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(brew --prefix)"
 cmake --build build
-open build/PAC-GAL.app
+open build/PAC-GAL.app            # window version
+./build/pacgal-text               # terminal version
 ```
 
 ### Linux
@@ -27,7 +46,8 @@ open build/PAC-GAL.app
 # Arch:                 sudo pacman -S cmake sdl3
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
-./build/PAC-GAL
+./build/PAC-GAL                   # window version
+./build/pacgal-text               # terminal version
 ```
 
 If your distribution doesn't package SDL3 yet, just leave it out and CMake builds it. In that case you need SDL's own build dependencies (X11 and/or Wayland, ALSA or PulseAudio development headers) for a working window and sound.
@@ -38,6 +58,7 @@ If your distribution doesn't package SDL3 yet, just leave it out and CMake build
 cmake -S . -B build
 cmake --build build --config Release
 build\Release\PAC-GAL.exe
+build\Release\pacgal-text.exe
 ```
 
 SDL3 is fetched and linked statically, so the EXE runs on its own. If you use vcpkg, `vcpkg install sdl3` and pass the vcpkg toolchain file instead.
@@ -72,6 +93,19 @@ As in 1982, the game first asks **How fast (0-30000)?**. That number was a busy-
 A "How fast" value of about 500–750 plays well.
 
 Command-line options: `--speed N` (skip the prompt), `--faithful-clock`, `--square-pixels`, `--fullscreen`, `--mute`, `--help`.
+
+### The terminal version
+
+```sh
+./build/pacgal-text --speed 600
+```
+
+- The terminal must be at least **80×25**; a bigger one is fine and the game is centred. If it's too small the game says so and waits for you to resize it.
+- Arrow keys steer, Esc quits, and F3 turns sound on and off when the build has sound. The game options are the same as the window version's.
+- Colours use the terminal's own 16-colour palette, so they follow your theme. If your terminal supports 24-bit colour (iTerm2, Windows Terminal, most Linux terminals), `--truecolor` gives the exact CGA colours.
+- Blinking (power pellets, frightened ghosts, messages) is done by the program itself, so it works in every terminal.
+- It works over SSH. On Windows it needs Windows 10 or later (Windows Terminal or the classic console).
+- Characters are drawn with Unicode equivalents of the IBM PC set, so use a font that has box-drawing characters and card suits. Almost every monospaced font does.
 
 ### Two changes from 1982
 
@@ -108,6 +142,8 @@ One thing is fixed by default: the original clock counted hours as 360 seconds. 
 | `src/sound.c` | IBM BASIC `PLAY` (MML) and `SOUND`, played in the background as a square wave like the PC speaker. It's generated on SDL's audio thread, so it doesn't depend on the frame rate, with 1 ms ramps so notes don't click. |
 | `src/main.c` | SDL3 window, rendering (8×8 CGA font with doubled rows, CGA palette, blinking), keyboard and audio |
 | `src/font_cp437.h` | CP437 8×8 font, generated by `tools/make_font.py` |
+| `src/term_main.c` | the terminal front end: ANSI escape codes and a changed-cells-only redraw, with termios input on macOS/Linux and the console API on Windows |
+| `src/cp437_unicode.h` | CP437 → UTF-8 table for the terminal, generated by `tools/make_cp437_unicode.py` |
 | `tests/` | logic tests and the trace tool used for the comparison |
 
 Rendering draws the text screen into a 640×400 image, exactly what a CGA card shows in 80-column text mode. It's then scaled with a "sharp bilinear" filter (nearest-neighbour up to a whole multiple, then smooth) so it stays crisp in any window size, at 4:3 by default.
