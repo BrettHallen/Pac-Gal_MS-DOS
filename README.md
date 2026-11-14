@@ -3,9 +3,11 @@ An analysis of the May 1982 game for IBM-PC by Al. J Jiménez.  It's a simple AS
 
 ![PAC-GAL](/PAC-GAL_1.png)
 
-The game was originally written in PC-BASIC and compiled.  An approximation of the original PC-BASIC source code has been generated.<br>
+The game was originally written in [PC-BASIC](https://robhagemans.github.io/pcbasic/) and compiled.  An approximation of the original PC-BASIC source code has been generated.<br>
 
 The aim of this project is to recreate it for the modern Mac so I don't need to worry about praying to the Omnissiah to keep my original IBM computers running.<br>
+
+Of course, you could also run it in the cross-platform PC-BASIC implementation linked above ...<br>
 
 ## Bugs
 There appears to be one interesting bug.  The variable ```P``` is the ghost randomness variable and is initialised to 0 in line 460:<br>
