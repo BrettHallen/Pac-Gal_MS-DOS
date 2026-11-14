@@ -1,6 +1,11 @@
-/* soak.c - drive the real-time (non-test) game path for many simulated hours:
+/* soak.c - soak test for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
+ *
+ * Drives the real-time (non-test) game path for many simulated hours:
  * random arrow keys, flashes, deaths, "Play again" answered with y.  Audio is
- * rendered at real-time rate.  Fails if a phase stalls or audio backs up. */
+ * rendered at real-time rate.  Fails if a phase stalls.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include "game.h"

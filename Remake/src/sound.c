@@ -1,3 +1,7 @@
+/* sound.c - PLAY/SOUND square-wave music for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
+ */
 #include "sound.h"
 #include <ctype.h>
 #include <math.h>

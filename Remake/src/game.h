@@ -1,6 +1,8 @@
-/* game.h - PAC-GAL game logic, ported from the 1982 compiled BASIC.
+/* game.h - PAC-GAL (Al J. Jimenez, May 1982) game logic, ported from the compiled BASIC.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
  *
- * The logic is a line-for-line port of Analysis/PACGAL_reconstructed.bas.
+ * The logic is a line-for-line port of Analysis/PACGAL.bas.
  * Variable names match that listing (R(), C(), DR(), KR(), LV, DT, P, T0...).
  * Index 1 is Pac-Gal, 2..5 are the ghosts.  The original's blocking loops
  * (intro animation, death/eat flashes, the 15-second wait) are turned into
@@ -31,8 +33,9 @@ typedef struct {
     double intro_step_ms;
     double death_flash_ms;
     double eat_flash_ms;
-    /* Changes from the 1982 game.  fright_min_s is on by default; set it to 0
-     * (--original) for the exact original.  The rest are off by default. */
+    /* Changes from the 1982 game.  fright_min_s and ghost_randomness are on by
+     * default; --original sets both to 0 for the exact original.  The rest are
+     * off by default. */
     double fright_min_s;     /* power pellets last at least this many seconds */
     double ghost_randomness; /* starting value for the original's unused P: chance a ghost wanders instead of chasing */
     double fright_scale;     /* multiplies how long power pellets last */

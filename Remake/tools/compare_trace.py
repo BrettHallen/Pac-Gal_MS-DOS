@@ -1,4 +1,8 @@
-"""Run the ORIGINAL Pac-gal.exe (in the Analysis/tools emulator) with the same
+"""compare_trace.py - check the PAC-GAL remake against the original EXE.
+Remake using Claude Opus 5.5, Nov 2026
+Guided by Brett Hallen
+
+Run the ORIGINAL Pac-gal.exe (in the Analysis/tools emulator) with the same
 scripted input as tests/trace.c and compare the game state step by step.
 
 usage: python3 compare_trace.py <Pac-gal.exe> <analysis-tools-dir> <pacgal_trace binary> [steps] [dump-step] [key-seed] [rnd-seed]

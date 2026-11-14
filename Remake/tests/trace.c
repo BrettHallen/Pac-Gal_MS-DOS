@@ -1,4 +1,8 @@
-/* trace.c - run the ported logic headless with a scripted input and print the
+/* trace.c - state trace for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
+ *
+ * Runs the ported logic headless with a scripted input and prints the
  * game state after every main-loop step.  Analysis/tools/compare_trace.py runs
  * the original EXE with the same script and checks the two traces match.
  *
@@ -21,7 +25,7 @@ int main(int argc, char **argv)
     int steps = argc > 1 ? atoi(argv[1]) : 300;
     if (argc > 4) { lcg_k = (unsigned)atol(argv[3]); lcg_r = (unsigned)atol(argv[4]); }
     static Screen scr; static Sound snd; static Game g;
-    GameOptions o; game_default_options(&o); o.speed = 0; o.fright_min_s = 0; /* exact 1982 rules */
+    GameOptions o; game_default_options(&o); o.speed = 0; o.fright_min_s = 0; o.ghost_randomness = 0; /* exact 1982 rules */
     snd_init(&snd, 8000);
     game_init(&g, &scr, &snd, &o, 1);
     g.rnd2_hook = rnd_bit; g.clock_hook = fixed_clock; g.sync = 1;

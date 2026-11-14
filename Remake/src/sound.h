@@ -1,4 +1,6 @@
 /* sound.h - PC-speaker style background music: IBM BASIC PLAY (MML) and SOUND.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
  *
  * Everything PAC-GAL plays uses "MB" (music background), so notes simply go
  * into a queue that the audio output drains while the game keeps running.

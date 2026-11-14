@@ -1,4 +1,6 @@
-/* main.c - SDL3 front end for the PAC-GAL recreation.
+/* main.c - SDL3 front end for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
  *
  * Draws the 80x25 text screen with an 8x8 CP437 font, doubling every row
  * (640x400), which is what an IBM CGA card's 640x200 text looks like on a
@@ -50,19 +52,20 @@ static void SDLCALL audio_callback(void *userdata, SDL_AudioStream *stream, int 
 
 static void usage(const char *argv0)
 {
-    printf("PAC-GAL (1982, Al J. Jimenez) - SDL3 recreation\n\n"
+    printf("PAC-GAL (1982, Al J. Jimenez) - SDL3 remake\n\n"
            "usage: %s [options]\n"
            "  --speed N          skip the \"How fast\" prompt (0 fastest .. 30000 slowest)\n"
            "  --faithful-clock   use the original hh*360+mm*60+ss clock, bugs included\n"
            "  --square-pixels    640x400 square pixels instead of a 4:3 CRT shape\n"
            "  --fullscreen       start full screen\n"
            "  --mute             start with sound off\n"
-           "\nGameplay (the only change from 1982 by default: power pellets last 6+ seconds):\n"
-           "  --original         exact 1982 rules (power pellets last ~13 ghost moves)\n"
+           "\nGameplay (changes from 1982 by default: power pellets last 6+ seconds,\n"
+           "ghosts wander 25%% of the time):\n"
+           "  --original         exact 1982 rules (short power pellets, ghosts always chase)\n"
            "  --fright-min S     power pellets last at least S seconds (default 6)\n"
            "  --easy             same as --wander 0.3 --fright 2 --scared-ghosts\n"
-           "  --wander P         chance (0-1) a ghost wanders instead of chasing; turns on\n"
-           "                     the author's unused difficulty curve\n"
+           "  --wander P         chance (0-1) a ghost wanders instead of chasing (default 0.25);\n"
+           "                     drives the author's difficulty curve\n"
            "  --fright X         power pellets last X times as long\n"
            "  --scared-ghosts    frightened ghosts run away instead of chasing you\n"
            "\nkeys: arrows move, F2 aspect, F3 sound on/off, F11 or Alt+Enter full screen, Esc quit\n",
@@ -109,7 +112,7 @@ int main(int argc, char **argv)
         else if (!strcmp(a, "--square-pixels")) aopt.square_pixels = 1;
         else if (!strcmp(a, "--fullscreen")) aopt.fullscreen = 1;
         else if (!strcmp(a, "--mute")) aopt.mute = 1;
-        else if (!strcmp(a, "--original")) gopt.fright_min_s = 0;
+        else if (!strcmp(a, "--original")) { gopt.fright_min_s = 0; gopt.ghost_randomness = 0; }
         else if (!strcmp(a, "--fright-min") && i + 1 < argc) gopt.fright_min_s = atof(argv[++i]);
         else if (!strcmp(a, "--easy")) { gopt.ghost_randomness = 0.3; gopt.fright_scale = 2.0; gopt.scared_ghosts = 1; }
         else if (!strcmp(a, "--wander") && i + 1 < argc) gopt.ghost_randomness = atof(argv[++i]);

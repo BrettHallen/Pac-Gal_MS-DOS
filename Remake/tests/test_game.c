@@ -1,5 +1,10 @@
-/* Logic tests for the PAC-GAL port.  The expected values were measured by
- * running the original PAC-GAL.EXE in an emulator (see Analysis/). */
+/* test_game.c - logic tests for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
+ *
+ * The expected values were measured by running the original PAC-GAL.EXE
+ * in an emulator (see Analysis/).
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,6 +25,7 @@ static void fresh(void)
     game_default_options(&o);
     o.speed = 0;
     o.fright_min_s = 0;          /* the expected values are the original's */
+    o.ghost_randomness = 0;
     snd_init(&snd, 8000);
     game_init(&g, &scr, &snd, &o, 1234);
     g.clock_hook = fixed_clock;
@@ -137,7 +143,8 @@ static void test_options(void)
 {
     /* defaults are the original game */
     GameOptions o; game_default_options(&o);
-    CHECK(o.ghost_randomness == 0 && o.fright_scale == 1.0 && !o.scared_ghosts, "other options off by default");
+    CHECK(o.ghost_randomness == 0.25, "ghosts wander 25%% of the time by default");
+    CHECK(o.fright_scale == 1.0 && !o.scared_ghosts, "other options off by default");
     CHECK(o.fright_min_s == 6.0, "pellets last 6 s by default");
     /* minimum fright time: 6 s at speed 750 (105 ms steps) = 58 steps */
     fresh();

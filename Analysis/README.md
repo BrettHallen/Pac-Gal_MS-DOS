@@ -6,7 +6,7 @@ Everything below comes from the binary, in three ways:
 
 1. A static, annotated disassembly of the compiled program (`pacgal_user_code.asm`).
 2. Runs of the real EXE in a small headless 8086/DOS emulator, used to check every number quoted here. That emulator is in `tools/`.
-3. A reconstructed BASIC source (`PACGAL_reconstructed.bas`). It runs to completion in PC-BASIC, the GW-BASIC emulator.
+3. A reconstructed BASIC source (`PACGAL.bas`). It runs to completion in PC-BASIC, the GW-BASIC emulator.
 
 ---
 
@@ -357,7 +357,7 @@ The game tells frightened ghosts and power pellets apart from everything else **
 
 ### 10.1 Suggested architecture
 
-- **Model the 80×25 text screen** as a `[[Cell]]` buffer where `Cell = (code: UInt8, attr: UInt8)`. Port the game logic almost line for line from `PACGAL_reconstructed.bas`, with `screen(r,c)` and `screenAttr(r,c)` reading that buffer. This is the most faithful approach and the quickest to get right, because the original's behaviour, including the quirks above, depends on reading the screen.
+- **Model the 80×25 text screen** as a `[[Cell]]` buffer where `Cell = (code: UInt8, attr: UInt8)`. Port the game logic almost line for line from `PACGAL.bas`, with `screen(r,c)` and `screenAttr(r,c)` reading that buffer. This is the most faithful approach and the quickest to get right, because the original's behaviour, including the quirks above, depends on reading the screen.
 - **Render** the buffer with SpriteKit, a SwiftUI `Canvas`, or a Metal or CoreText grid. Use a real CP437 font such as **Px437 IBM VGA 8x16** or **IBM CGA** from the *Ultimate Oldschool PC Font Pack* (int10h.org, CC BY-SA 4.0), or map codes to Unicode (the table in §4 and `maze.txt` already do). Draw at 640×400 with a 4:3 aspect so it looks like a CGA screen.
 - **Blink:** attribute bit 7 means blink. On real hardware that's a hardware blink of roughly 2 Hz. Use a timer to toggle visibility of blinking cells.
 - **Input:** `NSEvent` key-down on the arrow keys sets `(KR,KC)` straight away, like the event trap. Don't move on key-repeat. The game's own loop does the moving.
@@ -393,8 +393,8 @@ Getting this order right is what makes it play like the original:
 
 | File | What it is |
 |---|---|
-| `PAC-GAL_Analysis.md` | this document |
-| `PACGAL_reconstructed.bas` | complete reconstructed program (GW-BASIC syntax, ASCII, CRLF). Runs in PC-BASIC. |
+| `README.md` | this document |
+| `PACGAL.bas` | complete reconstructed program (GW-BASIC syntax, ASCII, CRLF). Runs in PC-BASIC. |
 | `pacgal_user_code.asm` | annotated disassembly of the 11.9 KB of game code. Runtime calls and variables are named; string constants are shown inline. |
 | `maze.txt`, `maze_ascii.txt`, `maze.json` | the maze as text, as ASCII mnemonics, and as raw codes and attributes |
 | `tools/emu.py`, `tools/harness.py` | headless unicorn-based DOS/BIOS emulator that runs the original EXE, with helpers to read and poke game variables |

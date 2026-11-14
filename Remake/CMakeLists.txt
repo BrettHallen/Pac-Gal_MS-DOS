@@ -1,3 +1,6 @@
+# CMakeLists.txt - build for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+# Remake using Claude Opus 5.5, Nov 2026
+# Guided by Brett Hallen
 cmake_minimum_required(VERSION 3.16)
 project(pacgal VERSION 1.0 LANGUAGES C)
 

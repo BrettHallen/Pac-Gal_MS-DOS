@@ -6,7 +6,7 @@
 ;   -> xxxx           = inline GOSUB target
 ;   "text"            = string constant referenced by that instruction
 ;   const@xxx=        = numeric constant (decoded as MBF single; the TIME function's 360/60 are doubles and show as 0 here)
-;   Variable names (SP, LV, DT, R(1), ...) are those used in PAC-GAL_Analysis.md / PACGAL_reconstructed.bas
+;   Variable names (SP, LV, DT, R(1), ...) are those used in README.md / PACGAL.bas
 ; Code 0x0246-0x1CE2 is maze drawing (long runs of PRINT items).  Game logic starts at 0x1CE2.
 
 001a:   lcall 0x79c, 0                           

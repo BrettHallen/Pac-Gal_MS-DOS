@@ -1,7 +1,9 @@
 /* screen.h - an 80x25 CGA-style text screen with BASIC-like PRINT/LOCATE/COLOR/SCREEN.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
  *
  * PAC-GAL uses the screen itself as its map (it reads characters and colours
- * back with SCREEN()), so the recreation keeps a real character/attribute
+ * back with SCREEN()), so the remake keeps a real character/attribute
  * buffer, exactly like video memory at B800:0000.
  */
 #ifndef PACGAL_SCREEN_H

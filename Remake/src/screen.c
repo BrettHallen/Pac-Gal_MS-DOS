@@ -1,3 +1,7 @@
+/* screen.c - 80x25 text screen for the PAC-GAL (Al J. Jimenez, May 1982) remake.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
+ */
 #include "screen.h"
 #include <stdio.h>
 

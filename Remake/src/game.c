@@ -1,5 +1,7 @@
 /* game.c - PAC-GAL (Al J. Jimenez, May 1982) game logic.
- * Line numbers in comments refer to Analysis/PACGAL_reconstructed.bas.
+ * Remake using Claude Opus 5.5, Nov 2026
+ * Guided by Brett Hallen
+ * Line numbers in comments refer to Analysis/PACGAL.bas.
  */
 #include "game.h"
 #include <math.h>
@@ -130,7 +132,7 @@ void game_default_options(GameOptions *o)
     o->death_flash_ms = 1000.0;
     o->eat_flash_ms = 500.0;
     o->fright_min_s = 6.0;   /* the original's 13 steps was ~1.5 s: far too short */
-    o->ghost_randomness = 0.0;
+    o->ghost_randomness = 0.25; /* fixing original PC-BASIC DEFINT A-Z bug */
     o->fright_scale = 1.0;
     o->scared_ghosts = 0;
 }
