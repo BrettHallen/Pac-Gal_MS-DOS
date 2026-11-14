@@ -31,7 +31,7 @@ It is modified in a few places, but the value never changes from 0:<br>
 A value of 0.25 means there is a 25% change that a ghost will "wander off" rather than chase you ... a value of 0 means the ghost will always chase you.<br>
 
 There are two issues here:<br>
-- The fairly-standard use of DEFINT A-Z which defines all variables as integers which means it can never be be 0.5 or 0.1: ```90 DEFINT A-Z```
+- The fairly-standard use of DEFINT A-Z which defines all variables as integers and means it can never be be 0.5 or 0.1: ```90 DEFINT A-Z```
 - It is never changed from value 0 and thus the changes to the value never have any effect
 
 Of course, this could be by design ... after testing, Al found no need to use the ghost randomness variable.<br>
