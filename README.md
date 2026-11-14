@@ -27,7 +27,7 @@ It is modified in a few places, but the value never changes from 0:<br>
 - Line 3550: You eat a ghost then ```P``` is halved (ghosts get harder)
 
 There are two issues here:<br>
-- The fairly-standard use of DEFINT A-Z which defines all variables as integers ```90 DEFINT A-Z``` which means it can never be be 0.05 or 0.1
+- The fairly-standard use of DEFINT A-Z which defines all variables as integers ```90 DEFINT A-Z``` which means it can never be be 0.5 or 0.1
 - It is never changed from value 0 and thus the changes to the value never have any effect
 
 Of course, this could be by design ... after testing, Al found no need to use the ghost randomness variable.<br>
