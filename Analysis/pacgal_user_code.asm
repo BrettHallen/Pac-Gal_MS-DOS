@@ -10,6 +10,7 @@
 ; Code 0x0246-0x1CE2 is maze drawing (long runs of PRINT items).  Game logic starts at 0x1CE2.
 
 001a:   lcall 0x79c, 0                           
+001a:   lcall 0x79c, 0                           
 001f:   push bp                                  
 0020:   mov bp, sp                               
 0022:   sub sp, 0x18                             
@@ -2688,7 +2689,7 @@
 2558:   call PRINT_str;                          
 255d:   call PRINT_str;                          
 2562:   mov bx, 0xa46                             ""
-2565:   call PRINT_str_nl                        
+2565:   call PRINT_str,                          
 256a:   jmp 0x2570                               
 256d:   jmp 0x2dbc                               
 2570: ------------------------------------ (stmt)
@@ -2709,7 +2710,7 @@
 259d:   shl di, 1                                
 259f:   mov bx, word ptr [di + U()]              
 25a3:   call CHR$                                
-25a8:   call PRINT_str,                          
+25a8:   call PRINT_str_nl                        
 25ad: ------------------------------------ (stmt)
 25ae:   mov di, word ptr [K]                     
 25b2:   shl di, 1                                
@@ -3491,7 +3492,7 @@
 2e7d: ------------------------------------ (stmt)
 2e7e:   call PRINT_begin                         
 2e83:   mov bx, 0xbda                             "...Hope you had a good time"
-2e86:   call PRINT_str,                          
+2e86:   call PRINT_str_nl                        
 2e8b: ------------------------------------ (stmt)
 2e8c:   call END                                 
 2e91: ------------------------------------ (stmt)

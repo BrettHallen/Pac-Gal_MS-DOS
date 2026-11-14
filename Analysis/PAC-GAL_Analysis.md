@@ -51,7 +51,7 @@ Runtime entry points identified (offsets in segment `02EC`):
 
 | Offset | BASIC | Offset | BASIC |
 |---|---|---|---|
-| `2A42` / `28FA` / `28F5` / `290E` / `28E6` | `PRINT` begin / string `;` / integer `;` / string `,` / string + newline | `039A`+`03B4` | `LOCATE r,c` |
+| `2A42` / `28FA` / `28F5` / `28E6` / `290E` | `PRINT` begin / string `;` / integer `;` / string `,` / string + newline | `039A`+`03B4` | `LOCATE r,c` |
 | `208B`+`20A5` | `COLOR f,b` | `200E` | `CLS` |
 | `216F` | `KEY OFF` / `KEY ON` | `2A0C` | `PRINT USING` |
 | `0262` | string `LET` | `0298` | `+` (concat) |
@@ -349,7 +349,7 @@ The game tells frightened ghosts and power pellets apart from everything else **
 9. **The `F()` timers run below zero forever.** Harmless.
 10. **Only lowercase `n` quits.**
 11. **No score, no second level.** Bonus lives come only from eating ghosts, capped at 3.
-12. **Interpreter vs compiler.** Two `PRINT` statements end with `,` or a bare newline (the death reset and the lives redraw). In the compiled EXE these only move the cursor. In GW-BASIC/BASICA the comma pads with spaces and the newline on row 25 scrolls the screen, which wrecks the maze. The reconstructed `.BAS` uses `;` there and says so.
+12. **The lives redraw after a death ends with a comma** (`PRINT STRING$(LV,1);A$;A$;A$;A$,`). That pads with spaces to the next 14-column print zone, so it blanks row 25 up to column 28. This is invisible, but a recreation that compares screens cell by cell has to do the same.
 
 ---
 
@@ -400,3 +400,4 @@ Getting this order right is what makes it play like the original:
 | `tools/emu.py`, `tools/harness.py` | headless unicorn-based DOS/BIOS emulator that runs the original EXE, with helpers to read and poke game variables |
 | `tools/annot.py`, `tools/names.json`, `tools/varnames.json` | the disassembly annotator and its name tables |
 | `tools/mml.py` | IBM BASIC `PLAY` string parser that gives frequency and duration lists |
+| `../Remake/` | a C + SDL3 port built from this spec. It runs in a window on macOS, Linux and Windows and was checked step by step against the original EXE. |

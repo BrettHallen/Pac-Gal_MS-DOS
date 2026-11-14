@@ -142,9 +142,9 @@
 3060 COLOR 7,0
 3070 IF LV<=1 THEN 4100
 3080 LV=LV-1
-3090 LOCATE 25,15:PRINT STRING$(LV,1);A$;A$;A$;A$;   ' EXE: ;"" (see notes)
+3090 LOCATE 25,15:PRINT STRING$(LV,1);A$;A$;A$;A$,
 3100 FOR K=1 TO 5
-3110   LOCATE R(K),C(K)*2+1:PRINT CHR$(U(K));        ' EXE has "," (see notes)
+3110   LOCATE R(K),C(K)*2+1:PRINT CHR$(U(K))
 3120   U(K)=32:CL(K)=7:R(K)=14:C(K)=K+17:F(K)=0
 3130   IF K=1 THEN DR(K)=0:DC(K)=0
 3140   KR(K)=0:KC(K)=0
@@ -180,7 +180,7 @@
 4130 IF K$="y" OR K$="Y" THEN 180
 4140 IF K$<>"n" THEN 4120
 4150 CLS:KEY ON
-4160 PRINT "...Hope you had a good time",
+4160 PRINT "...Hope you had a good time"
 4170 END
 4690 REM ====================================================== SPEED DELAY
 4700 D=0
